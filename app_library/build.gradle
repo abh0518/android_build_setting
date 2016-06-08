@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+
+// Android Library 프로젝트는 그래들에서 제공하는 버전 코드와 버전 네임 항목을 무시하므로 버전 관리를 위해서 별도 파일 처리를 해준다.
+def moduleVersionCode  = 0
+def moduleVersionName = "0.9.0"
+
+// Java 소스 파일에서 버전 정보를 읽어온다.
+File versionFile = file('src/main/java/net/abh0518/applibrary/Version.java')
+versionFile.eachLine { line ->
+    //버전 코드 가져오기
+    def group = (line =~ /versionCode( )*=( )*[0-9]+/)
+    if(group.hasGroup() && group.size() > 0){
+        moduleVersionCode = group[0][0].toString().replaceAll("versionCode( )*=( )*", "")
+    }
+
+    //버전 네임 가져오기
+    group = (line =~ /versionName( )*=( )*\".*\"/)
+    if(group.hasGroup() && group.size() > 0){
+        moduleVersionName = group[0][0].toString().replaceAll("(versionName( )*=( )*)|\"", "")
+    }
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 16
+        setProperty("archivesBaseName", "library-v${moduleVersionName}c${moduleVersionCode}")
+    }
+
+    buildTypes {
+        release {
+//            minifyEnabled false
+//            debuggable false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+        }
+    }
+    productFlavors{
+        dev{
+        }
+        staging{
+        }
+        product{
+        }
+    }
+    //라이브러리 모듈에 Flavor를 추가했을 경우 아래 옵션으로 기본 Flavor를 설정해 주어야 Android Studio에서 Run이 정상 동작을 한다.
+    defaultPublishConfig "devDebug"
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}

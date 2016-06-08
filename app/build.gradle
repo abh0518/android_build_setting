@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "net.abh0518.androidbuildsetting"
+        minSdkVersion 16
+        targetSdkVersion 16
+        versionCode 1
+        versionName "1.0"
+        //apk파일에 version 정보가 들어가도록 내용 추가
+        setProperty("archivesBaseName", "app-v${versionName}c${versionCode}")
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //빌드별 Flavor 설정을 해준다.
+    productFlavors{
+        dev{
+            applicationId "net.abh0518.androidbuildsetting.dev"
+        }
+        staging{
+            applicationId "net.abh0518.androidbuildsetting.staging"
+        }
+        product{
+            applicationId "net.abh0518.androidbuildsetting.product"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //compile project(":app_library")
+}

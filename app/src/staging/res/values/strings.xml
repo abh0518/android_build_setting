@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AndroidBuildSetting(staging)</string>
+    <string name="hello_world">Hello world!(staging)</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AndroidBuildSetting(product)</string>
+    <string name="hello_world">Hello world!(product)</string>
+</resources>

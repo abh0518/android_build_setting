@@ -30,5 +30,7 @@ find ./app -name '*-debug.apk' -exec mv {} ./$package_app_dir/ \;
 
 ./gradlew assembleproductRelease
 find ./app -name '*-unsigned.apk' -exec mv {} ./$package_app_dir/ \;
+
+./gradlew :app_library:aR
 find ./app_library -name '*.aar' -exec mv {} ./$package_module_dir/ \;
 
